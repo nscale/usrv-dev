@@ -1,0 +1,21 @@
+{
+  "name": "usrv",
+  "version": "0.1.0",
+  "description": "A toolchain for node.js microservices",
+  "main": "src/usrv.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Lindenau",
+  "license": "ISC",
+  "dependencies": {
+    "eventemitter3": "^3.1.0",
+    "lodash": "^4.17.11",
+    "nid": "^0.3.2",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "code": "^5.2.4",
+    "lab": "^18.0.2"
+  }
+}
