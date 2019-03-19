@@ -3,15 +3,25 @@
   "version": "0.1.0-rc1",
   "description": "A toolchain for node.js microservices",
   "main": "src/usrv.js",
+  "bin": {
+    "usrv": "./bin/usrv.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Michael Lindenau",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.4.2",
     "eventemitter3": "^3.1.0",
     "lodash": "^4.17.11",
+    "minimist": "^1.2.0",
     "nid": "^0.3.2",
+    "seneca": "^3.8.4",
+    "seneca-balance-client": "^0.7.0",
+    "seneca-basic": "^0.6.0",
+    "seneca-mesh": "^1.0.0",
+    "seneca-promisify": "^0.7.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
