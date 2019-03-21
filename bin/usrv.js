@@ -82,7 +82,7 @@ if (!existsSync(file)) {
 
 async function start() {
   const srv = await loadfile(file)
-  const srvfile = await loadfile(srvfilePath)
+  const srvfile = existsSync(srvfilePath) ? await loadfile(srvfilePath) : c => c
 
   srv.meta = srvPkg
 
