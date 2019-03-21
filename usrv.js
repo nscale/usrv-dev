@@ -1,4 +1,5 @@
 const Seneca = require('seneca')
+const extractPatterns = require('./lib/extractPatterns')
 
 const configTemplate = { transport: {} }
 
@@ -28,14 +29,24 @@ function createUsrv(srv, srvfile) {
   const overrides = srvfile(configTemplate)
   const srvConf = createConf(srv, overrides)
 
-  Seneca(srvConf)
-    .use(require('seneca-basic'))
+  const instance = Seneca(srvConf)
     // Promisify's seneca by adding message and post api's
     .use(require('seneca-promisify'))
-    // Leverage the mesh plugin
-    .use(require('seneca-mesh'), srvConf.transport)
     // Actually call the service
     .use(srv, srvConf.srv)
+
+  instance.ready(function() {
+    const patterns = extractPatterns(instance)
+
+    // Can only use one kind of transport with this.
+    // Need to think through how to expose this.
+    const transportSpec = {
+      listen: [{ pins: patterns, model: 'consume', type: 'http' }]
+    }
+
+    // Leverage the mesh plugin
+    instance.use(require('seneca-mesh'), transportSpec)
+  })
 }
 
 module.exports = createUsrv
