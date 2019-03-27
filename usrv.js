@@ -45,7 +45,7 @@ function createUsrv(srv, srvfile) {
     }
 
     // Leverage the mesh plugin
-    instance.use(require('seneca-mesh'), transportSpec)
+    instance.use(require('@nscale/divy'), transportSpec)
   })
 }
 
