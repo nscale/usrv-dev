@@ -2,7 +2,7 @@
 
     The service container for seneca microservices
 
-Usrv is an opinionated service container that makes it fun and easy to build seneca microservice.
+Usrv is an opinionated service container that makes it fun and easy to build seneca microservice. While usrv can be used on its own its intended for use with [nscale](https://www.npmjs.com/package/nscale).
 
 - **Sponsor**: [37teams](https://www.37teams.com)
 - **Status**: experimental
