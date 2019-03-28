@@ -1,9 +1,13 @@
 const Seneca = require('seneca')
+const _ = require('lodash')
 const extractPatterns = require('./lib/extractPatterns')
 
-const configTemplate = { transport: {} }
+const configTemplate = { transport: {}, blocks: [] }
 
 function createConf(srv, overrides) {
+  const mapped = ['name', 'version', 'timeout', 'transport', 'srv', 'blocks']
+  const unmapped = _.exclude(mapped, overrides)
+
   return {
     // Tag the service
     tag: overrides.name || srv.name,
@@ -21,31 +25,34 @@ function createConf(srv, overrides) {
     transport: overrides.transport,
     // Provides a safe place to store service-specific run-time data
     // without potential conflicts with usrv internals
-    srv: overrides.srv || {}
+    srv: overrides.srv || {},
+
+    blocks: [].concat(overrides.blocks || overrides.plugins || []),
+
+    ...unmapped
   }
 }
 
 function createUsrv(srv, srvfile) {
   const overrides = srvfile(configTemplate)
   const srvConf = createConf(srv, overrides)
-
   const instance = Seneca(srvConf)
-    // Promisify's seneca by adding message and post api's
-    .use(require('seneca-promisify'))
-    // Actually call the service
-    .use(srv, srvConf.srv)
+
+  instance.use(require('seneca-promisify'))
+
+  loadBlocks(srvConf.blocks)
+
+  instance.use(srv, srvConf.srv)
 
   instance.ready(function() {
-    const patterns = extractPatterns(instance)
+    const patternList = extractPatterns(instance)
+    const transportConf = resolveTransportConf(patternList)
 
-    // Can only use one kind of transport with this.
-    // Need to think through how to expose this.
     const transportSpec = {
       listen: [{ pins: patterns, model: 'consume', type: 'http' }]
     }
 
-    // Leverage the mesh plugin
-    instance.use(require('seneca-mesh'), transportSpec)
+    instance.use(require('seneca-mesh'), transportConf)
   })
 }
 
