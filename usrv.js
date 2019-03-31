@@ -33,6 +33,15 @@ function createConf(srv, overrides) {
   }
 }
 
+const resolveTransportConf = (patternList, srvConf) => {
+  const transportSpec = {
+    bases: ['@:3999'],
+    listen: [{ pins: patterns, model: 'consume', type: 'http' }]
+  }
+
+  return transportSpec
+}
+
 function createUsrv(srv, srvfile) {
   const overrides = srvfile(configTemplate)
   const srvConf = createConf(srv, overrides)
@@ -47,10 +56,6 @@ function createUsrv(srv, srvfile) {
   instance.ready(function() {
     const patternList = extractPatterns(instance)
     const transportConf = resolveTransportConf(patternList)
-
-    const transportSpec = {
-      listen: [{ pins: patterns, model: 'consume', type: 'http' }]
-    }
 
     instance.use(require('seneca-mesh'), transportConf)
   })
