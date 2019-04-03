@@ -45,7 +45,7 @@ function createUsrv(srv, srvfile) {
   instance.use(srv, srvConf.srv)
 
   instance.ready(function() {
-    instance.use(require('./seneca-divy'), srvConf.transport)
+    instance.use(require('seneca-divy'), srvConf.transport)
   })
 }
 
