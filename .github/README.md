@@ -84,14 +84,44 @@ npm start
 
 And go to this URL: `http://localhost:3000` - 🎉
 
-## Handling enviroment specific srvfiles
+## More then just a function
+
+It may look like usrv pushes you down the road of single independent "functions". While think being able to go down to that level is interesting, it should be a limitation. With that, you can still use seneca plugins.
+
+To define a plugin simple add this to your `srvfile`:
+
+```js
+module.exports = config => {
+  config.plugins = ['seneca-user', './my-local-plugin']
+}
+```
+
+The plugins array items can be:
+
+- string; npm package name
+- string; path to module relative to the srvfile
+- object; {plugin: 'string options mentioned about', options: {}}
+  - plugin - same as string options above
+  - options - and object which gets passed in to the plugin function
+
+As mentioned, any local plugins will be imported relative to the `srvfile`. That said, you can override this by adding the follow to srvfile:
+
+```js
+module.exports = config => {
+  config.relativeTo = 'path/to/my/plugins'
+}
+```
+
+This will import all local plugins relative to that provided path.
+
+## Handling Enviroment specific srvfiles
 
 It's likely you will need to have some specific config for the enviroments your service will run in such as `development` vs `production`.
 usrv uses the `srvfile` as default if present. You can override it by adding a srvfile for an enviroment. So if you needed a srvfile for `development` you would create a file named `srvfile.development` and set your `NODE_ENV` enviroment variable to `development`.
 
 So again, the look up pattern is `srvfile.[NOD_ENV]` with it defaulting to `srvfile` if no specific file exists.
 
-**note:** The file extension is a lowercase form of the env var. So if you NODE_ENV var is set to `PRODUCTION` usrv will look for a file `srvfile.production`. It will obviously not mutate the env value.
+**note:** The file extension is a lowercase form of the env var. So if your NODE_ENV var is set to `PRODUCTION` usrv will look for a file `srvfile.production`. It will obviously **not** mutate the env value.
 
 ### Thanks
 
