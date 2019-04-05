@@ -84,7 +84,7 @@ npm start
 
 And go to this URL: `http://localhost:3000` - 🎉
 
-## Handling Enviroment specific srvfiles
+## Handling enviroment specific srvfiles
 
 It's likely you will need to have some specific config for the enviroments your service will run in such as `development` vs `production`.
 usrv uses the `srvfile` as default if present. You can override it by adding a srvfile for an enviroment. So if you needed a srvfile for `development` you would create a file named `srvfile.development` and set your `NODE_ENV` enviroment variable to `development`.
