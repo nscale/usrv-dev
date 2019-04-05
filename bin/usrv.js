@@ -14,6 +14,7 @@ const pkg = require('../package.json')
 
 // Did the user supply any options
 const argv = require('minimist')(process.argv.slice(2))
+const env = process.env.NODE_ENV
 
 if (argv.help) {
   console.log(chalk`
@@ -42,7 +43,13 @@ if (argv.version) {
   process.exit()
 }
 
-const defaultSrvFilePath = path.resolve(process.cwd(), 'srvfile')
+let srvfileName = 'srvfile'
+
+if (env && existsSync(path.resolve(process.cwd(), `${srvfileName}.${env.toLowerCase()}`)) {
+ srvfileName = `${srvfileName}.${env}`
+}
+
+const defaultSrvFilePath = path.resolve(process.cwd(), srvfileName)
 const srvfilePath = argv.c || argv.config || defaultSrvFilePath
 
 let file = argv._[0]
