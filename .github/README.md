@@ -86,7 +86,7 @@ And go to this URL: `http://localhost:3000` - 🎉
 
 ## More then just a function
 
-It may look like usrv pushes you down the road of single independent "functions". While think being able to go down to that level is interesting, it should be a limitation. With that, you can still use seneca plugins.
+It may look like usrv pushes you down the road of single independent "functions". While think being able to go down to that level is interesting, it shouldn't be a limitation. With that, you can still use seneca plugins.
 
 To define a plugin simple add this to your `srvfile`:
 
