@@ -7,13 +7,15 @@
     "usrv": "./bin/usrv.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab"
   },
   "author": "Michael Lindenau",
   "license": "Artistic License 2.0",
   "dependencies": {
+    "@hapi/wreck": "^15.0.0",
     "chalk": "^2.4.2",
     "eventemitter3": "^3.1.0",
+    "fastify": "^2.1.0",
     "lodash": "^4.17.11",
     "minimist": "^1.2.0",
     "nid": "^0.3.2",

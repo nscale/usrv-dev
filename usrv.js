@@ -1,59 +1,30 @@
 const Seneca = require('seneca')
 const _ = require('lodash')
-const extractPatterns = require('./lib/extractPatterns')
+const loadBlocks = require('./lib/load-blocks')
+const { parseConfig, createConfig } = require('./lib/parse-configuration')
+const configureTransport = require('./lib/configure-transport')
 
-const configTemplate = { transport: {}, blocks: [] }
-
-function createConf(srv, overrides) {
-  const mapped = ['name', 'version', 'timeout', 'transport', 'srv', 'blocks']
-  const unmapped = _.exclude(mapped, overrides)
-
-  return {
-    // Tag the service
-    tag: overrides.name || srv.name,
-    // Set version
-    version: overrides.version || srv.meta.version,
-    // Set a network timeout for requests
-    timeout: overrides.timeout || 15000,
-    // Apply legacy flags to seneca
-    legacy: {
-      error: false,
-      transport: false
-    },
-    // Firgure out how to automate this and provide it configure less
-    // with overrides.
-    transport: overrides.transport,
-    // Provides a safe place to store service-specific run-time data
-    // without potential conflicts with usrv internals
-    srv: overrides.srv || {},
-
-    blocks: [].concat(overrides.blocks || overrides.plugins || []),
-
-    ...unmapped
+function Usrv(srv, srvfile) {
+  if (!srv) {
+    throw Error('no service found')
   }
-}
+  let config = createConfig()
 
-function createUsrv(srv, srvfile) {
-  const overrides = srvfile(configTemplate)
-  const srvConf = createConf(srv, overrides)
-  const instance = Seneca(srvConf)
+  srvfile(config)
 
-  instance.use(require('seneca-promisify'))
+  config = parseConfig(srv, config)
 
-  loadBlocks(srvConf.blocks)
+  const instance = Seneca(config.framework)
 
-  instance.use(srv, srvConf.srv)
+  loadBlocks(instance, config.blocks, config.relativeTo)
+
+  instance.use(srv, config.srv)
+
+  configureTransport(instance, config.transport)
 
   instance.ready(function() {
-    const patternList = extractPatterns(instance)
-    const transportConf = resolveTransportConf(patternList)
-
-    const transportSpec = {
-      listen: [{ pins: patterns, model: 'consume', type: 'http' }]
-    }
-
-    instance.use(require('seneca-mesh'), transportConf)
+    if (srv.ready && typeof srv.ready === 'function') srv.ready()
   })
 }
 
-module.exports = createUsrv
+module.exports = Usrv

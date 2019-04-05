@@ -23,33 +23,32 @@ npm install usrv
 
 Create an `index.js` file and export a function that accepts an optional options object. The context of this function is seneca as is the standard for a seneca plugin.
 
-```jsonld
+```js
 // index.js
 
-module.exports = (opts) => {
+module.exports = opts => {
   const seneca = this
 
-  seneca.message('my:pattern', async (msg) => {
-      // can so some awaiting things here if needed...
+  seneca.message('my:pattern', async msg => {
+    // can so some awaiting things here if needed...
 
-      return {ok: true}
+    return { ok: true }
   })
 }
 ```
 
 If you want to/need to configure your service you can do so with
-a `srvfile`. This needs to be at the root of your service (the same place your package.json is). The srvfile is just a js function that takes in the usrv [config object](srvfile.md) as allows you to mutate it. Once mutated, you simply return the [config object](srvfile.md)
+a `srvfile`. This needs to be at the root of your service (the same place your package.json is). The srvfile is just a js function that takes in the usrv [config object](srvfile.md) and allows you to mutate it.
 
 ```
 // srvfile
 
 module.exports = config => {
+  // customize service config here...
 
-  config.name='name_service'
+  config.name = 'name_service'
 
-  // customize service container here...
-
-  return config
+  // ...
 }
 
 ```
@@ -65,13 +64,15 @@ Next, ensure that the `main` property inside `package.json` points to your micro
 }
 ```
 
-Accessing your service will depend on your transport configuration. If, for example, you want the above example case to be available at `http://localhost:3000` add the following config to the `srvfile`:
+Accessing your service will depend on your transport configuration. If, for example, you want the above example case to be available at `http://localhost:3000`, create a `srvfile` add the following config:
 
 ```js
+// usrv assumes its being run as part of a service mesh.
+// It currently supports seneca-mesh or seneca-divy.
+// See below on how to use usrv in a mesh.
 module.exports = config => {
-  config.listen = 3000
-
-  return config
+  config.transport.mesh = 'none'
+  config.transport.listen = 3000
 }
 ```
 
