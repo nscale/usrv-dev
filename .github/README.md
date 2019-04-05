@@ -23,16 +23,16 @@ npm install usrv
 
 Create an `index.js` file and export a function that accepts an optional options object. The context of this function is seneca as is the standard for a seneca plugin.
 
-```jsonld
+```js
 // index.js
 
-module.exports = (opts) => {
+module.exports = opts => {
   const seneca = this
 
-  seneca.message('my:pattern', async (msg) => {
-      // can so some awaiting things here if needed...
+  seneca.message('my:pattern', async msg => {
+    // can so some awaiting things here if needed...
 
-      return {ok: true}
+    return { ok: true }
   })
 }
 ```
@@ -68,8 +68,12 @@ Next, ensure that the `main` property inside `package.json` points to your micro
 Accessing your service will depend on your transport configuration. If, for example, you want the above example case to be available at `http://localhost:3000` add the following config to the `srvfile`:
 
 ```js
+// usrv assumes its being run as part of a service mesh.
+// It currently supports seneca-mesh or seneca-divy.
+// See below on how to use usrv in a mesh.
 module.exports = config => {
-  config.listen = 3000
+  config.transport.mesh = 'none'
+  config.transport.listen = 3000
 
   return config
 }
