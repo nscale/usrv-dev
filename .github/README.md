@@ -114,6 +114,15 @@ module.exports = config => {
 
 This will import all local plugins relative to that provided path.
 
+## Within a service mesh
+usrv by default assumes its apart of a service mesh. The above examples showed you how to diable that and use the basic http listener. Here we will exploring using usrv within the context of both divy service mesh and seneca mesh.
+
+### Divy Mesh
+[TODO]
+
+### Seneca Mesh
+[TODO]
+
 ## Handling Enviroment specific srvfiles
 
 It's likely you will need to have some specific config for the enviroments your service will run in such as `development` vs `production`.
