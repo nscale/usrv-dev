@@ -84,6 +84,15 @@ npm start
 
 And go to this URL: `http://localhost:3000` - 🎉
 
+## Handling Enviroment specific srvfiles
+
+It's likely you will need to have some specific config for the enviroments your service will run in such as `development` vs `production`.
+usrv uses the `srvfile` as default if present. You can override it by adding a srvfile for an enviroment. So if you needed a srvfile for `development` you would create a file named `srvfile.development` and set your `NODE_ENV` enviroment variable to `development`.
+
+So again, the look up pattern is `srvfile.[NOD_ENV]` with it defaulting to `srvfile` if no specific file exists.
+
+**note:** The file extension is a lowercase form of the env var. So if you NODE_ENV var is set to `PRODUCTION` usrv will look for a file `srvfile.production`. It will obviously not mutate the env value.
+
 ### Thanks
 
 **usrv** would not be possible without the valuable open-source work of projects in the community. We would like to extend a special thank-you to [Richard Rodger](http://www.richardrodger.com/) and [Seneca](https://github.com/senecajs/seneca).
