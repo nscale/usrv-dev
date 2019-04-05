@@ -1,6 +1,6 @@
 {
   "name": "usrv",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0-alpha.1",
   "description": "A toolchain for node.js microservices",
   "main": "src/usrv.js",
   "bin": {
