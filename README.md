@@ -4,7 +4,6 @@
 
 Usrv is an opinionated service container that makes it fun and easy to build seneca microservice.
 
-- **Sponsor**: [37teams](https://www.37teams.com)
 - **Status**: experimental
 
 ## Features
