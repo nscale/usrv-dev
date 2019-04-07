@@ -1,6 +1,6 @@
 {
   "name": "usrv",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-rc.1",
   "description": "A toolchain for node.js microservices",
   "main": "src/usrv.js",
   "bin": {
@@ -10,7 +10,7 @@
     "test": "lab"
   },
   "author": "Michael Lindenau",
-  "license": "Artistic License 2.0",
+  "license": "Artistic-2.0",
   "dependencies": {
     "@hapi/wreck": "^15.0.0",
     "chalk": "^2.4.2",
@@ -29,5 +29,24 @@
   "devDependencies": {
     "code": "^5.2.4",
     "lab": "^18.0.2"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/37teams/usrv.git"
+  },
+  "keywords": [
+    "seneca",
+    "micro",
+    "microservices",
+    "usrv",
+    "services"
+  ],
+  "bugs": {
+    "url": "https://github.com/37teams/usrv/issues"
+  },
+  "homepage": "https://github.com/37teams/usrv#readme"
 }
