@@ -1,7 +1,7 @@
 {
   "name": "usrv",
-  "version": "0.1.0-rc.2",
-  "description": "A toolchain for node.js microservices",
+  "version": "0.1.0-rc.3",
+  "description": "A service container for seneca microservice",
   "main": "src/usrv.js",
   "bin": {
     "usrv": "./bin/usrv.js"
@@ -40,6 +40,7 @@
   },
   "keywords": [
     "seneca",
+    "senecajs",
     "micro",
     "microservices",
     "usrv",
