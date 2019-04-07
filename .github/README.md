@@ -2,7 +2,7 @@
 
     The service container for seneca microservices
 
-Usrv is an opinionated service container that makes it fun and easy to build seneca microservice. While usrv can be used on its own its intended for use with [nscale](https://www.npmjs.com/package/nscale).
+Usrv is an opinionated service container that makes it fun and easy to build seneca microservice.
 
 - **Sponsor**: [37teams](https://www.37teams.com)
 - **Status**: experimental
@@ -86,7 +86,7 @@ And go to this URL: `http://localhost:3000` - 🎉
 
 ## More then just a function
 
-It may look like usrv pushes you down the road of single independent "functions". While think being able to go down to that level is interesting, it should be a limitation. With that, you can still use seneca plugins.
+It may look like usrv pushes you down the road of single independent "functions". While think being able to go down to that level is interesting, it shouldn't be a limitation. With that, you can still use seneca plugins.
 
 To define a plugin simple add this to your `srvfile`:
 
@@ -113,6 +113,15 @@ module.exports = config => {
 ```
 
 This will import all local plugins relative to that provided path.
+
+## Within a service mesh
+usrv by default assumes its apart of a service mesh. The above examples showed you how to diable that and use the basic http listener. Here we will exploring using usrv within the context of both divy service mesh and seneca mesh.
+
+### Divy Mesh
+[TODO]
+
+### Seneca Mesh
+[TODO]
 
 ## Handling Enviroment specific srvfiles
 
