@@ -4,8 +4,6 @@
 
 Usrv is an opinionated service container that makes it fun and easy to build seneca microservice.
 
-- **Status**: experimental
-
 ## Features
 
 - **Easy**: Modernizes seneca with async await, and in general gets out of the way.
@@ -114,12 +112,15 @@ module.exports = config => {
 This will import all local plugins relative to that provided path.
 
 ## Within a service mesh
+
 usrv by default assumes its apart of a service mesh. The above examples showed you how to diable that and use the basic http listener. Here we will exploring using usrv within the context of both divy service mesh and seneca mesh.
 
 ### Divy Mesh
+
 [TODO]
 
 ### Seneca Mesh
+
 [TODO]
 
 ## Handling Enviroment specific srvfiles
