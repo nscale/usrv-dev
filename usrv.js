@@ -1,6 +1,6 @@
 const Seneca = require('seneca')
 const _ = require('lodash')
-const loadBlocks = require('./lib/load-blocks')
+const registerPlugins = require('./lib/register-plugins')
 const { parseConfig, createConfig } = require('./lib/parse-configuration')
 const configureTransport = require('./lib/configure-transport')
 
@@ -8,23 +8,23 @@ function Usrv(srv, srvfile) {
   if (!srv) {
     throw Error('no service found')
   }
-  let config = createConfig()
 
-  srvfile(config)
+  const srvConfiguration = createConfig()
 
-  config = parseConfig(srv, config)
+  srvfile(srvConfiguration)
 
+  srv.meta = srv.meta || {}
+
+  const config = parseConfig(srv, srvConfiguration)
   const instance = Seneca(config.framework)
 
-  loadBlocks(instance, config.blocks, config.relativeTo)
+  registerPlugins(instance, config.plugins, config.relativeTo)
 
   instance.use(srv, config.srv)
 
   configureTransport(instance, config.transport)
 
-  instance.ready(function() {
-    if (srv.ready && typeof srv.ready === 'function') srv.ready()
-  })
+  return instance
 }
 
 module.exports = Usrv

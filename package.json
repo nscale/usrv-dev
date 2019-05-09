@@ -1,6 +1,6 @@
 {
   "name": "usrv",
-  "version": "0.1.0-rc.4",
+  "version": "0.1.0-alpha.1",
   "description": "A service container for seneca microservice",
   "main": "src/usrv.js",
   "bin": {
@@ -12,7 +12,6 @@
   "author": "Michael Lindenau",
   "license": "Artistic-2.0",
   "dependencies": {
-    "@hapi/wreck": "^15.0.0",
     "chalk": "^2.4.2",
     "eventemitter3": "^3.1.0",
     "fastify": "^2.1.0",
@@ -27,6 +26,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@hapi/wreck": "^15.0.1",
     "code": "^5.2.4",
     "lab": "^18.0.2"
   },

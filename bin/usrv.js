@@ -93,7 +93,11 @@ async function start() {
 
   srv.meta = srvPkg
 
-  usrv(srv, srvfile)
+  const service = usrv(srv, srvfile)
+
+  await service.ready()
+
+  console.log('service is ready')
 }
 
 start()
