@@ -45,8 +45,11 @@ if (argv.version) {
 
 let srvfileName = 'srvfile'
 
-if (env && existsSync(path.resolve(process.cwd(), `${srvfileName}.${env.toLowerCase()}`)) {
- srvfileName = `${srvfileName}.${env}`
+if (
+  env &&
+  existsSync(path.resolve(process.cwd(), `${srvfileName}.${env.toLowerCase()}`))
+) {
+  srvfileName = `${srvfileName}.${env}`
 }
 
 const defaultSrvFilePath = path.resolve(process.cwd(), srvfileName)
