@@ -16,7 +16,7 @@ function Usrv(srv, srvfile) {
   srv.meta = srv.meta || {}
 
   const config = parseConfig(srv, srvConfiguration)
-  const instance = Seneca(config.framework)
+  const instance = Seneca(config.container)
 
   registerPlugins(instance, config.plugins, config.relativeTo)
 
