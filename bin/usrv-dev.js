@@ -9,7 +9,7 @@ const arg = require('minimist')
 const chalk = require('chalk')
 const logError = require('../lib/log-error')
 const loadfile = require('../lib/loadfile')
-const usrv = require('../usrv')
+const usrv = require('../usrv-dev')
 const pkg = require('../package.json')
 
 // Did the user supply any options
@@ -18,14 +18,14 @@ const env = process.env.NODE_ENV
 
 if (argv.help) {
   console.log(chalk`
-  {bold.cyan usrv} - Service container for seneca microservices
+  {bold.cyan usrv-dev} - Service container for seneca microservices
 
   {bold USAGE}
-      {bold $} {cyan usrv} --help
-      {bold $} {cyan usrv} --version
-      {bold $} {cyan usrv} [{underline entry_point.js}] [-c {underline srvfile_path}
+      {bold $} {cyan usrv-dev} --help
+      {bold $} {cyan usrv-dev} --version
+      {bold $} {cyan usrv-dev} [{underline entry_point.js}] [-c {underline srvfile_path}
 
-  By default {cyan usrv} will look first for the {bold "main"} property in
+  By default {cyan usrv-dev} will look first for the {bold "main"} property in
   package.json and subsequently for {bold index.js} as the default {underline entry_point}.
   Specifying a srvfile path {bold --c} argument will cause usrv to use the file at that path
   relative to the root project directory (where you package.json file is).

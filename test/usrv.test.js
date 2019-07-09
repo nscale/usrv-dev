@@ -3,7 +3,7 @@ const Lab = require('lab')
 const { after, before, describe, it } = (exports.lab = Lab.script())
 
 const Wreck = require('@hapi/wreck')
-const usrv = require('../usrv')
+const usrv = require('../usrv-dev')
 
 describe('usrv', () => {
   it('Starts non mesh service', async () => {
