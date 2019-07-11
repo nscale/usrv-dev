@@ -22,7 +22,7 @@ function Usrv(srv, srvfile) {
 
   instance.use(srv, config.srv)
 
-  configureTransport(instance, config.transport)
+  configureTransport(instance, config.mesh)
 
   return instance
 }
