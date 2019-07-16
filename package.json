@@ -1,6 +1,6 @@
 {
   "name": "usrv-dev",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A runtime container for seneca microservice in development",
   "main": "usrv-dev.js",
   "bin": {
