@@ -94,13 +94,7 @@ async function start() {
   const srv = await loadfile(file)
   const srvfile = existsSync(srvfilePath) ? await loadfile(srvfilePath) : c => c
 
-  srv.meta = srvPkg
-
-  const service = usrv(srv, srvfile)
-
-  await service.ready()
-
-  console.log('service is ready')
+  usrv(srv, srvfile, srvPkg)
 }
 
 start()

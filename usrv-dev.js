@@ -1,30 +1,49 @@
 const Seneca = require('seneca')
 const _ = require('lodash')
 const registerPlugins = require('./lib/register-plugins')
-const { parseConfig, createConfig } = require('./lib/parse-configuration')
-const configureTransport = require('./lib/configure-transport')
+const configurationUtils = require('./lib/parse-configuration')
+const envs = require('./lib/envs')
 
-function Usrv(srv, srvfile) {
+const { compileConfiguration, compileOptions } = configurationUtils
+
+async function Usrv(srv, srvfile, pkg) {
   if (!srv) {
     throw Error('no service found')
   }
 
-  const srvConfiguration = createConfig()
+  const srvOptions = compileOptions(srvfile)
+  const configuration = compileConfiguration(srv, srvOptions, pkg)
 
-  srvfile(srvConfiguration)
+  const container = Seneca(configuration.runtime)
 
-  srv.meta = srv.meta || {}
+  container.use(require('seneca-promisify'))
 
-  const config = parseConfig(srv, srvConfiguration)
-  const instance = Seneca(config.container)
+  registerPlugins(container, configuration.plugins, configuration.relativeTo)
 
-  registerPlugins(instance, config.plugins, config.relativeTo)
+  container.use(srv, configuration.srv)
 
-  instance.use(srv, config.srv)
+  container.use(require('seneca-mesh'), {
+    isbase: false,
+    bases: ['127.0.0.1'],
+    tag: envs.PROJECT_ID,
+    listen: configuration.listen,
+    balance_client: { debug: { client_updates: true } },
+    jointime: envs.SWIM_JOIN_TIMEOUT,
+    sneeze: {
+      silent: false,
+      swim: {
+        interval: envs.SWIM_INTERVAL,
+        joinTimeout: envs.SWIM_JOIN_TIMEOUT,
+        pingTimeout: envs.SWIM_PING_TIMEOUT,
+        pingReqTimeout: envs.SWIM_PING_REQUEST_TIMEOUT
+      }
+    }
+  })
 
-  configureTransport(instance, config.mesh)
+  await container.ready()
 
-  return instance
+  container.fixedargs.fatal$ = true
+  container.log.info('service is ready')
 }
 
 module.exports = Usrv
